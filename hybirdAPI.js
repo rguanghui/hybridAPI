@@ -1,6 +1,6 @@
 'use strict';
-var hybirdAPI = new function () {
-  var parse = function (text) {
+var hybirdAPI = new function() {
+  var parse = function(text) {
     try {
       return JSON.parse(text) || {};
     } catch (error) {
@@ -8,14 +8,14 @@ var hybirdAPI = new function () {
     }
   };
 
-  var UserAgent = (function () {
+  var UserAgent = (function() {
     var UA = window.navigator.userAgent;
     var eleme = (UA.toLowerCase().match(/(iphone|android)/i) || [])[1];
     var UAarray = [];
     if (/rajax/i.test(UA)) {
       // UAarray = [Rajax: "1", Apple: "iPhone8,2", iPhone_OS: "9.2", Eleme: "5.5.1", ID: "0CC711B6-ADAD-4E67-8E84-4E2F04708F5F"];
       try {
-        UA.split(';')[0].split(' ').forEach(function (item) {
+        UA.split(';')[0].split(' ').forEach(function(item) {
           var key = item.split('/')[0];
           UAarray[key] = item.split('/')[1];
         });
@@ -37,7 +37,7 @@ var hybirdAPI = new function () {
     if (UserAgent.appVersion >= '5.9') {
       var _callback = function _callback() {
         window.WebViewJavascriptBridge.init();
-        window.EJsBridge.getGlobalGeohash(function (geohash) {
+        window.EJsBridge.getGlobalGeohash(function(geohash) {
           done(geohash);
         });
       };
@@ -45,7 +45,7 @@ var hybirdAPI = new function () {
     } else {
       var _callback = function _callback() {
         window.WebViewJavascriptBridge.init();
-        window.WebViewJavascriptBridge.callHandler('getGlobalGeohash', '', function (geohash) {
+        window.WebViewJavascriptBridge.callHandler('getGlobalGeohash', '', function(geohash) {
           done(geohash);
         });
       };
@@ -53,7 +53,7 @@ var hybirdAPI = new function () {
     }
   };
 
-  this.share = function (param) {
+  this.share = function(param) {
     if (UserAgent.appVersion >= '5.9') {
       var meta = '<meta name="eleme-share">' +
       '<meta name="eleme-share:title" content="' + param.title + '">' +
@@ -62,14 +62,14 @@ var hybirdAPI = new function () {
       document.head.insertAdjacentHTML('afterbegin', meta);
     } else {
       var serialize = function serialize(obj) {
-        return Object.keys(obj).map(function (key) {
+        return Object.keys(obj).map(function(key) {
           return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
         }).join('&');
       };
       // 0: 微信
       // 1: 微信朋友圈
       // 2: 微博
-      var params = ['0', '1', '2'].map(function (value) {
+      var params = ['0', '1', '2'].map(function(value) {
         return 'eleme://share?' + serialize({
           type: value,
           title: param.title,
@@ -97,16 +97,16 @@ var hybirdAPI = new function () {
     }
   };
 
-  this.selecteHongbao = function (hongbaosn) {
+  this.selecteHongbao = function(hongbaosn) {
     if (UserAgent.appVersion >= '5.9') {
-      var _callback = function () {
+      var _callback = function() {
         window.WebViewJavascriptBridge.init();
         window.EJsBridge.selecteHongbao(hongbaosn);
       };
       window.EJsBridge && _callback() || document.addEventListener('WebViewJavascriptBridgeInjectFinishedReady', _callback);
     } else {
-      var _callback = function () {
-        window.WebViewJavascriptBridge.callHandler('selectedHongbao', hongbaosn, function () {});
+      var _callback = function() {
+        window.WebViewJavascriptBridge.callHandler('selectedHongbao', hongbaosn, function() {});
       }
       window.WebViewJavascriptBridge && _callback() || document.addEventListener('WebViewJavascriptBridgeReady', _callback);
     }

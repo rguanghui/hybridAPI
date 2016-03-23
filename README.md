@@ -14,7 +14,7 @@
 
 ```html
 <!-- 引入 hybirdAPI -->
-<script src="//github.elemecdn.com/uglifyjs!eleme/hybirdAPI/e3a5aa4/hybirdAPI.js"></script>
+<script src="//github.elemecdn.com/uglifyjs!eleme/hybirdAPI/0.1.2/hybirdAPI.js"></script>
 ```
 
 ###### 2. 使用

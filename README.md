@@ -4,8 +4,6 @@
 
 以及，若有新需求也可以给本仓库提issue，会更新到app那边支持。
 
-依赖[Geohash](https://github.com/YanagiEiichi/geohash.js)
-
 1. 获取饿了么外卖app全局的geohash值。
 2. 显示app右上角的分享功能，并定制分享文案
 3. 下单选择红包
@@ -15,19 +13,18 @@
 ###### 1. 安装
 
 ```html
-<!-- 引入依赖 Geohash -->
-<script src="//github.elemecdn.com/YanagiEiichi/geohash.js/1.0.1/geohash.js"></script>
 <!-- 引入 hybirdAPI -->
-<script src="/node_modules/hybirdAPI/hybirdAPI.js"></script>
+<script src="//github.elemecdn.com/uglifyjs!eleme/hybirdAPI/e3a5aa4/hybirdAPI.js"></script>
 ```
 
 ###### 2. 使用
 
-获取饿了么app全局的location值
+获取饿了么app全局的geohash值
 
 ```js
-hybirdAPI.getGlobalGeohash(location => {
-  init({latitude: location[0], longitude: location[1]});
+hybirdAPI.getGlobalGeohash(geohash => {
+	//
+  alert('geohash:' + geohash);
 });
 ```
 
@@ -46,5 +43,5 @@ hybirdAPI.share({
 
 下单选择红包
 ```js
-hybirdAPI.selecteHongbao(hongbaosn);hongbaosn为选中红包的SN，必传项
+hybirdAPI.selectHongbao(hongbaosn);hongbaosn为选中红包的SN，必传项
 ```

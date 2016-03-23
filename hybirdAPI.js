@@ -97,11 +97,11 @@ var hybirdAPI = new function() {
     }
   };
 
-  this.selecteHongbao = function(hongbaosn) {
+  this.selectHongbao = function(hongbaosn) {
     if (UserAgent.appVersion >= '5.9') {
       var _callback = function() {
         window.WebViewJavascriptBridge.init();
-        window.EJsBridge.selecteHongbao(hongbaosn);
+        window.EJsBridge.selectHongbao(hongbaosn);
       };
       window.EJsBridge && _callback() || document.addEventListener('WebViewJavascriptBridgeInjectFinishedReady', _callback);
     } else {

@@ -14,7 +14,7 @@
 
 ```html
 <!-- 引入 hybirdAPI -->
-<script src="/hybirdAPI/hybirdAPI.js"></script>
+<script src="//github.elemecdn.com/uglifyjs!eleme/hybirdAPI/e3a5aa4/hybirdAPI.js"></script>
 ```
 
 ###### 2. 使用
@@ -43,5 +43,5 @@ hybirdAPI.share({
 
 下单选择红包
 ```js
-hybirdAPI.selecteHongbao(hongbaosn);hongbaosn为选中红包的SN，必传项
+hybirdAPI.selectHongbao(hongbaosn);hongbaosn为选中红包的SN，必传项
 ```

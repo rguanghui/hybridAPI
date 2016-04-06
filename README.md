@@ -1,6 +1,6 @@
-# hybirdAPI
+# hybridAPI
 
-这里提供的是目前饿了么mobile app端支持的hybird APIs的兼容版本，app5.9于2016年3月28日发版，届时将不支持旧版方法。建议大家及时更新，欢迎使用。
+这里提供的是目前饿了么mobile app端支持的hybrid APIs的兼容版本，app5.9于2016年3月28日发版，届时将不支持旧版方法。建议大家及时更新，欢迎使用。
 
 以及，若有新需求也可以给本仓库提issue，会更新到app那边支持。
 
@@ -13,8 +13,8 @@
 ###### 1. 安装
 
 ```html
-<!-- 引入 hybirdAPI -->
-<script src="//github.elemecdn.com/uglifyjs!eleme/hybirdAPI/0.1.2/hybirdAPI.js"></script>
+<!-- 引入 hybridAPI -->
+<script src="//github.elemecdn.com/uglifyjs!eleme/hybridAPI/0.1.3/hybridAPI.js"></script>
 ```
 
 ###### 2. 使用
@@ -22,7 +22,7 @@
 获取饿了么app全局的geohash值
 
 ```js
-hybirdAPI.getGlobalGeohash(geohash => {
+hybridAPI.getGlobalGeohash(geohash => {
 	//
   alert('geohash:' + geohash);
 });
@@ -31,7 +31,7 @@ hybirdAPI.getGlobalGeohash(geohash => {
 显示app右上角的分享功能，并定制分享文案
 
 ```js
-hybirdAPI.share({
+hybridAPI.share({
   title: '分享标题',
   text: '分享副标题',
   weibo: '微博分享的内容',
@@ -43,5 +43,5 @@ hybirdAPI.share({
 
 下单选择红包
 ```js
-hybirdAPI.selectHongbao(hongbaosn);hongbaosn为选中红包的SN，必传项
+hybridAPI.selectHongbao(hongbaosn);hongbaosn为选中红包的SN，必传项
 ```

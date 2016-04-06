@@ -1,5 +1,5 @@
 'use strict';
-var hybirdAPI = new function() {
+var hybridAPI = new function() {
   var parse = function(text) {
     try {
       return JSON.parse(text) || {};
@@ -10,22 +10,14 @@ var hybirdAPI = new function() {
 
   var UserAgent = (function() {
     var UA = window.navigator.userAgent;
-    var eleme = (UA.toLowerCase().match(/(iphone|android)/i) || [])[1];
-    var UAarray = [];
     if (/rajax/i.test(UA)) {
-      // UAarray = [Rajax: "1", Apple: "iPhone8,2", iPhone_OS: "9.2", Eleme: "5.5.1", ID: "0CC711B6-ADAD-4E67-8E84-4E2F04708F5F"];
-      try {
-        UA.split(';')[0].split(' ').forEach(function(item) {
-          var key = item.split('/')[0];
-          UAarray[key] = item.split('/')[1];
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      // "Rajax/1 Apple/iPhone8,2 iPhone_OS/9.2 Eleme/5.5.1 ID/0CC711B6-ADAD-4E67-8E84-4E2F04708F5F";
+      var matches = userAgent.match(/Eleme\/([0-9]+)\.([0-9]+)/i);
+      version = Number(matches[1]) * 100 + Number(matches[2]);
     }
     return {
-      app: eleme || null,
-      appVersion: UAarray['Eleme'] || null
+      app: (UA.toLowerCase().match(/(iphone|android)/i) || [])[1],
+      appVersion: version
     }
   })();
 
@@ -34,7 +26,7 @@ var hybirdAPI = new function() {
       var location = parse(geohash) || geohash;
       callback(location);
     };
-    if (UserAgent.appVersion >= '5.9') {
+    if (UserAgent.appVersion >= 509) {
       var _callback = function _callback() {
         window.WebViewJavascriptBridge.init();
         window.EJsBridge.getGlobalGeohash(function(geohash) {
@@ -54,7 +46,7 @@ var hybirdAPI = new function() {
   };
 
   this.share = function(param) {
-    if (UserAgent.appVersion >= '5.9') {
+    if (UserAgent.appVersion >= 509) {
       var meta = '<meta name="eleme-share">' +
       '<meta name="eleme-share:title" content="' + param.title + '">' +
       '<meta name="eleme-share:description" content="' + param.text + '">' +
@@ -98,7 +90,7 @@ var hybirdAPI = new function() {
   };
 
   this.selectHongbao = function(hongbaosn) {
-    if (UserAgent.appVersion >= '5.9') {
+    if (UserAgent.appVersion >= 509) {
       var _callback = function() {
         window.WebViewJavascriptBridge.init();
         window.EJsBridge.selectHongbao(hongbaosn);

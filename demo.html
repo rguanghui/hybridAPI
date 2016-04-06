@@ -4,23 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="cleartype" content="on">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui, maximum-scale=1.0, minimum-scale=1.0">
-    <title>hybirdAPI demo</title>
+    <title>hybridAPI demo</title>
   </head>
   <body>
     <a href="javascript:location.reload()">刷新刷新刷新</a>
-    <script src="/activities/dist/hybirdAPI/hybirdAPI.js"></script>
+    <script src="/activities/dist/hybridAPI/hybridAPI.js"></script>
     <script>
-      hybirdAPI.getGlobalGeohash(function(geohash) {
+      hybridAPI.getGlobalGeohash(function(geohash) {
         alert('geohash:' + geohash);
       });
-      hybirdAPI.share({
+      hybridAPI.share({
         title: '饿了么积分商城，任性兑换不花钱',
         text: '叫外卖，上饿了么，免费好礼等你来拿',
         weibo: '饿了么积分商城，任性兑换不花钱。叫外卖，上饿了么，免费好礼等你来拿。' + location.href + '（分享自@饿了么网上订餐）',
         url: location.href,
         image_url: 'https://fuss10.elemecdn.com/3/ca/80d890e2515fea76e46490a2c9455png.png'
       });
-      hybirdAPI.selectHongbao('20160318155810312233218022384');
+      hybridAPI.selectHongbao('20160318155810312233218022384');
     </script>
   </body>
 </html>

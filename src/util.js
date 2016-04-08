@@ -21,16 +21,18 @@ export const invokeMethod = function(method, ...args) {
   const doInvokeMethod = function() {
     webViewJSBridge = window.WebViewJavascriptBridge;
     webViewJSBridge.init();
-    /**
-     * Android 版本5.9以上的 EJsBridge 和 JsBridge 不能用赋值给局部变量，不要使用 ES6 中的 spread。
-     */
-    if (window.EJsBridge && window.EJsBridge[method]) {
-      window.EJsBridge[method].apply(window.EJsBridge, args);
-    } else if (window.JsBridge && window.JsBridge[method]) {
-      window.JsBridge[method].apply(window.JsBridge, args);
-    } else if (webViewJSBridge) {
-      webViewJSBridge.callHandler(method, ...args);
-    }
+    setTimeout(function() { // Fix for Android 5.10
+      /**
+       * Android 版本5.9以上的 EJsBridge 和 JsBridge 不能用赋值给局部变量，不要使用 ES6 中的 spread。
+       */
+      if (window.EJsBridge && window.EJsBridge[method]) {
+        window.EJsBridge[method].apply(window.EJsBridge, args);
+      } else if (window.JsBridge && window.JsBridge[method]) {
+        window.JsBridge[method].apply(window.JsBridge, args);
+      } else if (webViewJSBridge) {
+        webViewJSBridge.callHandler(method, ...args);
+      }
+    }, 0);
   };
 
   if (window.EJsBridge || window.JsBridge || webViewJSBridge) {

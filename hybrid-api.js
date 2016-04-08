@@ -39,14 +39,13 @@
     var doInvokeMethod = function doInvokeMethod() {
       webViewJSBridge = window.WebViewJavascriptBridge;
       webViewJSBridge.init();
+      /**
+       * Android 版本5.9以上的 EJsBridge 和 JsBridge 不能用赋值给局部变量，不要使用 ES6 中的 spread。
+       */
       if (window.EJsBridge && window.EJsBridge[method]) {
-        var _window$EJsBridge;
-
-        (_window$EJsBridge = window.EJsBridge)[method].apply(_window$EJsBridge, args);
+        window.EJsBridge[method].apply(window.EJsBridge, args);
       } else if (window.JsBridge && window.JsBridge[method]) {
-        var _window$JsBridge;
-
-        (_window$JsBridge = window.JsBridge)[method].apply(_window$JsBridge, args);
+        window.JsBridge[method].apply(window.JsBridge, args);
       } else if (webViewJSBridge) {
         var _webViewJSBridge;
 

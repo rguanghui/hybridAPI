@@ -14,7 +14,7 @@
 
 ```html
 <!-- 引入 HybridAPI -->
-<script src="//github.elemecdn.com/uglifyjs!eleme/hybridAPI/0.2.1/hybrid-api.js"></script>
+<script src="//github.elemecdn.com/uglifyjs!eleme/hybridAPI/0.2.2/hybrid-api.js"></script>
 ```
 
 ### 2. 使用

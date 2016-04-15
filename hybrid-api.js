@@ -38,21 +38,27 @@
 
     var doInvokeMethod = function doInvokeMethod() {
       webViewJSBridge = window.WebViewJavascriptBridge;
-      webViewJSBridge.init();
+      try {
+        // Fix for Android 5.8.3
+        webViewJSBridge.init();
+      } catch (e) {}
       setTimeout(function () {
         // Fix for Android 5.10
         /**
          * Android 版本5.9以上的 EJsBridge 和 JsBridge 不能用赋值给局部变量，不要使用 ES6 中的 spread。
          */
-        if (window.EJsBridge && window.EJsBridge[method]) {
-          window.EJsBridge[method].apply(window.EJsBridge, args);
-        } else if (window.JsBridge && window.JsBridge[method]) {
-          window.JsBridge[method].apply(window.JsBridge, args);
-        } else if (webViewJSBridge) {
-          var _webViewJSBridge;
+        try {
+          // Fix for Android 5.8.3
+          if (window.EJsBridge && window.EJsBridge[method]) {
+            window.EJsBridge[method].apply(window.EJsBridge, args);
+          } else if (window.JsBridge && window.JsBridge[method]) {
+            window.JsBridge[method].apply(window.JsBridge, args);
+          } else if (webViewJSBridge) {
+            var _webViewJSBridge;
 
-          (_webViewJSBridge = webViewJSBridge).callHandler.apply(_webViewJSBridge, [method].concat(args));
-        }
+            (_webViewJSBridge = webViewJSBridge).callHandler.apply(_webViewJSBridge, [method].concat(args));
+          }
+        } catch (e) {}
       }, 0);
     };
 

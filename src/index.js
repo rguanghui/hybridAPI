@@ -40,5 +40,13 @@ export default {
 
   selectHongbao(sn) {
     invokeMethod(legacy ? 'selectedHongbao' : 'selectHongbao', sn, legacy ? function() {} : null);
+  },
+
+  getLocateStatus(callback) {
+    invokeMethod('getLocateStatus', function(status) { callback(status) });
+  },
+
+  setTitle(title) {
+    invokeMethod('setTitle', title);
   }
 }

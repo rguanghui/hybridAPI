@@ -103,6 +103,14 @@
     },
     selectHongbao: function selectHongbao(sn) {
       invokeMethod(legacy ? 'selectedHongbao' : 'selectHongbao', sn, legacy ? function () {} : null);
+    },
+    getLocateStatus: function getLocateStatus(callback) {
+      invokeMethod('getLocateStatus', function (status) {
+        callback(status);
+      });
+    },
+    setTitle: function setTitle(title) {
+      invokeMethod('setTitle', title);
     }
   };
 

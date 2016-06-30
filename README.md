@@ -4,9 +4,12 @@
 
 以及，若有新需求也可以给本仓库提 issue ，会更新到 App 那边支持。
 
-1. 获取饿了么外卖 App 全局的 geohash 值。
-2. 显示 App 右上角的分享按钮，并定制分享文案。
-3. 下单选择红包。
+1. 获取饿了么外卖 App 全局的 geohash 值。v5.4
+2. 显示 App 右上角的分享按钮，并定制分享文案。v5.6
+3. 下单选择红包。v5.9
+4. 设置页面的title。v5.10
+3. 获取用户位置定位状态。v5.10.1
+3. 关闭当前页面。v5.12.1
 
 ## 安装与使用
 
@@ -43,4 +46,25 @@ hybridAPI.share({
 下单选择红包
 ```js
 hybridAPI.selectHongbao(hongbaosn); // hongbaosn为选中红包的SN，必传项
+```
+
+设置页面的title
+```js
+hybridAPI.setTitle(title); // title为页面的title
+```
+
+获取用户位置定位状态
+```js
+hybridAPI.getLocateStatus(status => {
+  // status 状态值
+  // 0: 尚未发起定位
+  // 1: 定位中
+  // 2: 定位成功
+  // 3: 定位失败
+});
+```
+
+关闭当前页面
+```js
+hybridAPI.closePage();
 ```

@@ -48,5 +48,9 @@ export default {
 
   setTitle(title) {
     invokeMethod('setTitle', title);
-  }
+  },
+
+  closePage() {
+    invokeMethod('closePage');
+  },
 }

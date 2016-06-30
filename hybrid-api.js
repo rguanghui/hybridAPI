@@ -111,6 +111,9 @@
     },
     setTitle: function setTitle(title) {
       invokeMethod('setTitle', title);
+    },
+    closePage: function closePage() {
+      invokeMethod('closePage');
     }
   };
 

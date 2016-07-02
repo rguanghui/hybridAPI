@@ -22,9 +22,9 @@
 
 ### 2. 使用
 
-获取饿了么app全局的geohash值
+获取饿了么app全局的 geohash 值
 
-```js
+```javascript
 hybridAPI.getGlobalGeohash(geohash => {
   alert('geohash:' + geohash);
 });
@@ -32,7 +32,7 @@ hybridAPI.getGlobalGeohash(geohash => {
 
 显示 App 右上角的分享按钮，并定制分享文案
 
-```js
+```javascript
 hybridAPI.share({
   title: '分享标题',
   text: '分享副标题',
@@ -44,17 +44,17 @@ hybridAPI.share({
 ```
 
 下单选择红包
-```js
+```javascript
 hybridAPI.selectHongbao(hongbaosn); // hongbaosn为选中红包的SN，必传项
 ```
 
 设置页面的title
-```js
+```javascript
 hybridAPI.setTitle(title); // title为页面的title
 ```
 
 获取用户位置定位状态
-```js
+```javascript
 hybridAPI.getLocateStatus(status => {
   // status 状态值
   // 0: 尚未发起定位
@@ -65,6 +65,13 @@ hybridAPI.getLocateStatus(status => {
 ```
 
 关闭当前页面
-```js
+```javascript
 hybridAPI.closePage();
+```
+
+获取当前登录用户的 userID
+```javascript
+hybridAPI.getUserID(id => {
+  callback(id)
+})
 ```

@@ -43,7 +43,7 @@ export default {
   },
 
   getLocateStatus(callback) {
-    invokeMethod('getLocateStatus', function(status) { callback(status) });
+    invokeMethod('getLocateStatus', callback);
   },
 
   setTitle(title) {
@@ -52,5 +52,9 @@ export default {
 
   closePage() {
     invokeMethod('closePage');
+  },
+
+  getUserID(callback) {
+    invokeMethod('getUserID', callback);
   },
 }

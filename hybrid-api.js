@@ -105,15 +105,16 @@
       invokeMethod(legacy ? 'selectedHongbao' : 'selectHongbao', sn, legacy ? function () {} : null);
     },
     getLocateStatus: function getLocateStatus(callback) {
-      invokeMethod('getLocateStatus', function (status) {
-        callback(status);
-      });
+      invokeMethod('getLocateStatus', callback);
     },
     setTitle: function setTitle(title) {
       invokeMethod('setTitle', title);
     },
     closePage: function closePage() {
       invokeMethod('closePage');
+    },
+    getUserID: function getUserID(callback) {
+      invokeMethod('getUserID', callback);
     }
   };
 

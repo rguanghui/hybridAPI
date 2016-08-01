@@ -10,6 +10,7 @@
 4. 设置页面的title。v5.10
 3. 获取用户位置定位状态。v5.10.1
 3. 关闭当前页面。v5.12.1
+1. 唤出 App 分享按钮pannel，并定制分享按钮，分享文案，分享来源 v5.4甚至更早:joy:
 
 ## 安装与使用
 
@@ -74,4 +75,26 @@ hybridAPI.closePage();
 hybridAPI.getUserID(id => {
   callback(id)
 })
+```
+
+
+唤出 App 分享按钮pannel，并定制分享按钮，分享文案，分享来源
+
+```js
+<!-- source: 来源，用于统计 -->
+// 分享按钮如下，可选（需要哪个按钮加哪个参数）
+// weixin: 微信
+// weixin_timeline: 微信朋友圈
+// weibo: 微博
+// qq: QQ好友
+// qzone: QQ空间
+
+hybridAPI.sharePanel({
+  source: '', //来源，用于统计
+  targets: ['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone'], // 分享按钮
+  title: '分享标题',
+  text: '分享副标题',
+  url: '分享链接',
+  image_url: '分享图标'
+});
 ```

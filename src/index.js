@@ -81,13 +81,13 @@ export default {
         value: 5,
       },
     };
-
+    let url = options.url + ((~options.url.indexOf('#') || ~options.url.indexOf('?')) ? '&' : '?');
     let param = options.targets.reduce((prev, item) => {
       prev[SHARE_TYPES[item].key] = 'eleme://share?' + toQueryString({
         type: SHARE_TYPES[item].value,
         title: options.title,
-        text: SHARE_TYPES[item].value === 2 ? `${options.title}, ${options.text}。分享链接：${options.url}` : options.text,
-        url: options.url,
+        text: SHARE_TYPES[item].value === 2 ? `${options.title}, ${options.text}。分享链接：${url}type=${item}` : options.text,
+        url: `${url}type=${item}`,
         image_url: options.image_url
       });
       return prev;

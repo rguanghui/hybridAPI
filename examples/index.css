@@ -1,0 +1,30 @@
+html {
+  font-family: PingFangSC-Regular, Helvetica Neue, Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+body {
+  padding-bottom: 20px;
+}
+
+button {
+  -webkit-appearance: none;
+  background-color: #26a2ff;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: #fff;
+  width: 100%;
+  line-height: 40px;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.buttonGroup {
+  border-bottom: 1px solid #ededed;
+  padding-bottom: 20px;
+}
+
+.buttonGroup p {
+  margin: 5px 0;
+}

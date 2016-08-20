@@ -42,6 +42,10 @@ export default {
     invokeMethod(legacy ? 'selectedHongbao' : 'selectHongbao', sn, legacy ? function() {} : null);
   },
 
+  selectCoupon(id) {
+    invokeMethod('selectCoupon', '' + id);
+  },
+
   getLocateStatus(callback) {
     invokeMethod('getLocateStatus', callback);
   },

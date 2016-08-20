@@ -104,6 +104,9 @@
     selectHongbao: function selectHongbao(sn) {
       invokeMethod(legacy ? 'selectedHongbao' : 'selectHongbao', sn, legacy ? function () {} : null);
     },
+    selectCoupon: function selectCoupon(id) {
+      invokeMethod('selectCoupon', '' + id);
+    },
     getLocateStatus: function getLocateStatus(callback) {
       invokeMethod('getLocateStatus', callback);
     },

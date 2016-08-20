@@ -77,7 +77,6 @@ hybridAPI.getUserID(id => {
 })
 ```
 
-
 唤出 App 分享按钮pannel，并定制分享按钮，分享文案，分享来源
 
 ```js
@@ -100,3 +99,19 @@ hybridAPI.sharePanel({
 
 其中分享链接里增加了一个type参数，用于识别不同的分享平台，免去在分享链接的另外获取。值为['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone']其中之一
 ```
+
+### 3.开发
+
+安装依赖
+
+```
+npm install
+```
+编译打包
+
+```
+rollup -c
+```
+参考：
+
+[http://rollupjs.org/guide/](http://rollupjs.org/guide/)

@@ -14,6 +14,12 @@
 
   var legacy = version < 509;
 
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
+
   var parseJSON = function parseJSON(string) {
     try {
       return JSON.parse(string) || {};
@@ -28,11 +34,26 @@
     }).join('&');
   };
 
+  var isObject = function isObject(value) {
+    var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+    return !!value && (type == 'object' || type == 'function');
+  };
+
+  var isFunction = function isFunction(value) {
+    var tag = isObject(value) ? Object.prototype.toString.call(value) : '';
+    return tag === '[object Function]' || tag === '[object GeneratorFunction]';
+  };
+
   var invokeMethod = function invokeMethod(method) {
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
 
+    var lastParam = args.slice(-1)[0];
+    var reject = void 0;
+    if (lastParam.isReject) {
+      reject = args.pop();
+    }
     var webViewJSBridge = window.WebViewJavascriptBridge;
     var INJECTED_EVENT_NAME = legacy ? 'WebViewJavascriptBridgeInjectFinishedReady' : 'WebViewJavascriptBridgeReady';
 
@@ -41,7 +62,10 @@
       try {
         // Fix for Android 5.8.3
         webViewJSBridge.init();
-      } catch (e) {}
+      } catch (error) {
+        reject && reject(error);
+      }
+
       setTimeout(function () {
         // Fix for Android 5.10
         /**
@@ -58,7 +82,9 @@
 
             (_webViewJSBridge = webViewJSBridge).callHandler.apply(_webViewJSBridge, [method].concat(args));
           }
-        } catch (e) {}
+        } catch (error) {
+          reject && reject(error);
+        }
       }, 0);
     };
 
@@ -69,14 +95,39 @@
     }
   };
 
+  var invokeMethodWithError = function invokeMethodWithError(method, reject) {
+    reject.isReject = true;
+
+    for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+      args[_key2 - 2] = arguments[_key2];
+    }
+
+    invokeMethod.apply(undefined, [method].concat(args, [reject]));
+  };
+
   var index = {
     getGlobalGeohash: function getGlobalGeohash(callback) {
       var args = legacy ? [''] : [];
-      args.push(function (geohash) {
-        callback(parseJSON(geohash) || geohash);
-      });
 
-      invokeMethod.apply(undefined, ['getGlobalGeohash'].concat(args));
+      if (isFunction(callback)) {
+        args.push(function (geohash) {
+          callback(parseJSON(geohash) || geohash);
+        });
+
+        invokeMethod.apply(undefined, ['getGlobalGeohash'].concat(args));
+      } else {
+        return new Promise(function (resolve, reject) {
+          args.push(function (geohash) {
+            resolve(parseJSON(geohash) || geohash);
+          });
+
+          try {
+            invokeMethodWithError.apply(undefined, ['getGlobalGeohash', reject].concat(args));
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
     },
     share: function share(options) {
       if (!legacy) {
@@ -108,7 +159,19 @@
       invokeMethod('selectCoupon', '' + id);
     },
     getLocateStatus: function getLocateStatus(callback) {
-      invokeMethod('getLocateStatus', callback);
+      if (isFunction(callback)) {
+        invokeMethod('getLocateStatus', callback);
+      } else {
+        return new Promise(function (resolve, reject) {
+          try {
+            invokeMethodWithError('getLocateStatus', reject, function (status) {
+              resolve(status);
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
     },
     setTitle: function setTitle(title) {
       invokeMethod('setTitle', title);
@@ -117,7 +180,19 @@
       invokeMethod('closePage');
     },
     getUserID: function getUserID(callback) {
-      invokeMethod('getUserID', callback);
+      if (isFunction(callback)) {
+        invokeMethod('getUserID', callback);
+      } else {
+        return new Promise(function (resolve, reject) {
+          try {
+            invokeMethodWithError('getUserID', reject, function (userId) {
+              resolve(userId);
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
     },
     sharePanel: function sharePanel(options) {
       var SHARE_TYPES = {

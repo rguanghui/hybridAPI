@@ -1,3 +1,5 @@
+import { legacy } from './env';
+
 export const parseJSON = function(string) {
   try {
     return JSON.parse(string) || {};
@@ -12,9 +14,17 @@ export const toQueryString = function(object) {
   }).join('&');
 };
 
-import { legacy } from './env';
+export const isFunction = value => {
+  let tag = value instanceof Object ? Object.prototype.toString.call(value) : '';
+  return tag === '[object Function]' || tag === '[object GeneratorFunction]';
+};
 
 export const invokeMethod = function(method, ...args) {
+  let lastParam = args[args.length - 1];
+  let reject;
+  if (lastParam && lastParam.isReject) {
+    reject = args.pop();
+  }
   let webViewJSBridge = window.WebViewJavascriptBridge;
   const INJECTED_EVENT_NAME = legacy ? 'WebViewJavascriptBridgeInjectFinishedReady' : 'WebViewJavascriptBridgeReady';
 
@@ -22,8 +32,12 @@ export const invokeMethod = function(method, ...args) {
     webViewJSBridge = window.WebViewJavascriptBridge;
     try { // Fix for Android 5.8.3
       webViewJSBridge.init();  
-    } catch(e) {
+    } catch(error) {
+      if (reject) {
+        reject(error);
+      }
     }
+
     setTimeout(function() { // Fix for Android 5.10
       /**
        * Android 版本5.9以上的 EJsBridge 和 JsBridge 不能用赋值给局部变量，不要使用 ES6 中的 spread。
@@ -35,8 +49,11 @@ export const invokeMethod = function(method, ...args) {
           window.JsBridge[method].apply(window.JsBridge, args);
         } else if (webViewJSBridge) {
           webViewJSBridge.callHandler(method, ...args);
-        }  
-      } catch(e) {
+        }
+      } catch(error) {
+        if (reject) {
+          reject(error);
+        }
       }
     }, 0);
   };
@@ -46,4 +63,9 @@ export const invokeMethod = function(method, ...args) {
   } else {
     document.addEventListener(INJECTED_EVENT_NAME, doInvokeMethod);
   }
+};
+
+export const invokeMethodWithError = function(method, reject, ...args) {
+  reject.isReject = true;
+  invokeMethod(method, ...args, reject);
 };

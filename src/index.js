@@ -1,14 +1,35 @@
 import { legacy } from './env';
-import { parseJSON, toQueryString, invokeMethod } from './util';
+import {
+  parseJSON,
+  toQueryString,
+  invokeMethod,
+  isFunction,
+  invokeMethodWithError
+} from './util';
 
 export default {
   getGlobalGeohash(callback) {
     const args = legacy ? [''] : [];
-    args.push(function(geohash) {
-      callback(parseJSON(geohash) || geohash);
-    });
 
-    invokeMethod('getGlobalGeohash', ...args);
+    if (isFunction(callback)) {
+      args.push(geohash => {
+        callback(parseJSON(geohash) || geohash);
+      });
+
+      invokeMethod('getGlobalGeohash', ...args);
+    } else {
+      return new Promise((resolve, reject) => {
+        args.push(geohash => {
+          resolve(parseJSON(geohash) || geohash);
+        });
+
+        try {
+          invokeMethodWithError('getGlobalGeohash', reject, ...args);
+        } catch(error) {
+          reject(error);
+        }
+      });
+    }
   },
 
   share(options) {
@@ -47,7 +68,19 @@ export default {
   },
 
   getLocateStatus(callback) {
-    invokeMethod('getLocateStatus', callback);
+    if (isFunction(callback)) {
+      invokeMethod('getLocateStatus', callback);
+    } else {
+      return new Promise((resolve, reject) => {
+        try {
+          invokeMethodWithError('getLocateStatus', reject, status => {
+            resolve(status);
+          });
+        } catch(error) {
+          reject(error);
+        }
+      });
+    }
   },
 
   setTitle(title) {
@@ -59,7 +92,19 @@ export default {
   },
 
   getUserID(callback) {
-    invokeMethod('getUserID', callback);
+    if (isFunction(callback)) {
+      invokeMethod('getUserID', callback);
+    } else {
+      return new Promise((resolve, reject) => {
+        try {
+          invokeMethodWithError('getUserID', reject, userId => {
+            resolve(userId)
+          });
+        } catch(error) {
+          reject(error);
+        }
+      });
+    }
   },
 
   sharePanel(options) {

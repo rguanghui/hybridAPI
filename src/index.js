@@ -6,6 +6,14 @@ import {
   isFunction,
   invokeMethodWithError
 } from './util';
+import bridgeProtocol from 'bridge-protocol';
+
+// polyfill for window onload won't fire
+if (!legacy) {
+  const METHODS = ['getGlobalGeohash', 'showShareButton', 'selectedHongbao', 'selectHongbao',
+    'selectCoupon', 'getLocateStatus', 'setTitle', 'closePage', 'getUserID'];
+  bridgeProtocol.inject('EJsBridge', METHODS);
+}
 
 export default {
   getGlobalGeohash(callback) {

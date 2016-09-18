@@ -14,12 +14,6 @@
 
   var legacy = version < 509;
 
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
-  };
-
   var parseJSON = function parseJSON(string) {
     try {
       return JSON.parse(string) || {};
@@ -34,13 +28,8 @@
     }).join('&');
   };
 
-  var isObject = function isObject(value) {
-    var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
-    return !!value && (type == 'object' || type == 'function');
-  };
-
   var isFunction = function isFunction(value) {
-    var tag = isObject(value) ? Object.prototype.toString.call(value) : '';
+    var tag = value instanceof Object ? Object.prototype.toString.call(value) : '';
     return tag === '[object Function]' || tag === '[object GeneratorFunction]';
   };
 
@@ -49,9 +38,9 @@
       args[_key - 1] = arguments[_key];
     }
 
-    var lastParam = args.slice(-1)[0];
+    var lastParam = args[args.length - 1];
     var reject = void 0;
-    if (lastParam.isReject) {
+    if (lastParam && lastParam.isReject) {
       reject = args.pop();
     }
     var webViewJSBridge = window.WebViewJavascriptBridge;
@@ -63,7 +52,9 @@
         // Fix for Android 5.8.3
         webViewJSBridge.init();
       } catch (error) {
-        reject && reject(error);
+        if (reject) {
+          reject(error);
+        }
       }
 
       setTimeout(function () {
@@ -83,7 +74,9 @@
             (_webViewJSBridge = webViewJSBridge).callHandler.apply(_webViewJSBridge, [method].concat(args));
           }
         } catch (error) {
-          reject && reject(error);
+          if (reject) {
+            reject(error);
+          }
         }
       }, 0);
     };
@@ -104,6 +97,22 @@
 
     invokeMethod.apply(undefined, [method].concat(args, [reject]));
   };
+
+  var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  function createCommonjsModule(fn, module) {
+    return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
+
+  var bridgeProtocol = createCommonjsModule(function (module, exports) {
+  !function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n(e.bridgeProtocol=e.bridgeProtocol||{})}(commonjsGlobal,function(e){"use strict";var n=function(){var e=navigator.userAgent||navigator.vendor;return/windows phone/i.test(e)?"Windows Phone":/android/i.test(e)?"Android":/iPad|iPhone|iPod/.test(e)&&!window.MSStream?"iOS":"Unknown"},t=function(e){var n=document.createEvent("Events");n.initEvent("WebViewJavascriptBridgeReady"),n.bridge=WebViewJavascriptBridge,document.dispatchEvent(n)},i="elmscheme",r="__ELM_QUEUE_MESSAGE__",a="elemejsbridge",o="_handler",d="_interface",c={},s=n(),l={},u=void 0,f=function(){u=document.createElement("iframe"),u.style.display="none","iOS"===s&&(u.src=i+"://"+r),document.documentElement.appendChild(u)},v=1,p=[],g=function(e,n,t){if(n){var o="cb_"+v++ +"_"+(new Date).getTime();c[o]=n,e.callbackId=o}p.push(e);var d=JSON.stringify(p);"iOS"===s?u.src=i+"://"+r:(u.src=a+"://return/"+t+"/"+encodeURIComponent(d),p=[])},m=function(){var e=JSON.stringify(p);return p=[],e},h=function(e,n){l[e]=n},w=function(e){return l[e]},E=function(e,n,t){g({handlerName:e,data:n},t,o)},b=function(e,n,t,i){var r={obj:e,method:n};"undefined"!=typeof t&&null!==t&&(r.data=t),g(r,i,d)},_="_response",y={},J=function(e){var n=JSON.parse(e),t=void 0;if(n.responseId)t=y[n.responseId],"function"==typeof t&&t(n.data),delete y[n.responseId];else{if(n.callbackId){var i=n.callbackId;t=function(e){g({responseId:i,data:e},null,_)}}var r=WebViewJavascriptBridge._messageHandler;n.handlerName&&(r=w(n.handlerName));try{r(n.data,t)}catch(e){"undefined"!=typeof console&&console.log("WebViewJavascriptBridge: WARNING: javascript handler threw.",n,e)}}},S=[],W=function(e){S?S.push(e):J(e)},j=function(e){if(WebViewJavascriptBridge._messageHandler)throw new Error("WebViewJavascriptBridge.init called twice");WebViewJavascriptBridge._messageHandler=e;for(var n=0;n<S.length;n++)J(S[n]);S=null},I=function(e,n){var t=window[e]={},i=function(n){n=n.replace(new RegExp(":","g"),""),t[n]=function(){var t=arguments.length;if(t>2)throw new Error("arguments Error");var i=arguments[0]||null,r=arguments[1]||null;1===t&&"function"==typeof i&&(r=i,i=null),b(e,n,i,r)}};(n||[]).forEach(i)},O=function(){var e=document.createEvent("Events");e.initEvent("WebViewJavascriptBridgeInjectFinishedReady"),document.dispatchEvent(e)},B=function(){};document.addEventListener("DOMContentLoaded",function(){f(),t(B)}),B.init=j,B.inject=I,B.injectEvent=O,B.registerHandler=h,B.callHandler=E;var N=n();"iOS"===N?(B._fetchQueue=m,B._handleMessageFromObjC=W):"Android"===N?B._handleMessageFromNative=W:console.warn("Error: "+N+" is not supported."),window.WebViewJavascriptBridge=B,e.inject=I,e.registerHandler=h,e.callHandler=E,e.callObjectMethod=b});
+  });
+
+  // polyfill for window onload won't fire
+  if (!legacy) {
+    var METHODS = ['getGlobalGeohash', 'showShareButton', 'selectedHongbao', 'selectHongbao', 'selectCoupon', 'getLocateStatus', 'setTitle', 'closePage', 'getUserID'];
+    bridgeProtocol.inject('EJsBridge', METHODS);
+  }
 
   var index = {
     getGlobalGeohash: function getGlobalGeohash(callback) {

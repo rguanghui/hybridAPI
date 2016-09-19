@@ -51,11 +51,7 @@
       try {
         // Fix for Android 5.8.3
         webViewJSBridge.init();
-      } catch (error) {
-        if (reject) {
-          reject(error);
-        }
-      }
+      } catch (error) {}
 
       setTimeout(function () {
         // Fix for Android 5.10

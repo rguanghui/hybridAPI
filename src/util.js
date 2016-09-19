@@ -33,9 +33,6 @@ export const invokeMethod = function(method, ...args) {
     try { // Fix for Android 5.8.3
       webViewJSBridge.init();  
     } catch(error) {
-      if (reject) {
-        reject(error);
-      }
     }
 
     setTimeout(function() { // Fix for Android 5.10

@@ -7,7 +7,7 @@
   var userAgent = window.navigator.userAgent;
 
   var version = void 0;
-  if (/rajax|eleme/i.test(userAgent)) {
+  if (/eleme/i.test(userAgent)) {
     var matches = userAgent.match(/Eleme\/([0-9]+)\.([0-9]+)/i);
     version = Number(matches[1]) * 100 + Number(matches[2]);
   }

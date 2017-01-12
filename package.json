@@ -5,25 +5,23 @@
   "main": "hybrid-api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c && sed -i '' $'s/\t/  /g' hybrid-api.js",
+    "build": "webpack -p",
     "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eleme/hybirdAPI.git"
   },
-  "author": "lele.xu@ele.me",
+  "author": "fe@ele.me",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/eleme/hybirdAPI/issues"
   },
   "homepage": "https://github.com/eleme/hybirdAPI#readme",
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "rollup": "^0.25.4",
-    "rollup-plugin-babel": "^2.4.0",
-    "rollup-plugin-commonjs": "^5.0.3",
-    "rollup-plugin-node-resolve": "^2.0.0"
+    "buble": "^0.15.2",
+    "buble-loader": "^0.4.0",
+    "webpack": "^2.2.0-rc.4"
   },
   "dependencies": {
     "bridge-protocol": "0.0.6"

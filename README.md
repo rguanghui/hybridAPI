@@ -18,7 +18,7 @@
 
 ```html
 <!-- 引入 HybridAPI -->
-<script src="//github.elemecdn.com/uglifyjs!eleme/hybridAPI/0.2.2/hybrid-api.js"></script>
+<script src="//github.elemecdn.com/uglifyjs!eleme/hybridAPI/${version}/hybrid-api.js"></script>
 ```
 
 ### 2. 使用
@@ -26,9 +26,13 @@
 获取饿了么app全局的 geohash 值
 
 ```javascript
-hybridAPI.getGlobalGeohash(geohash => {
-  alert('geohash:' + geohash);
-});
+hybridAPI.getGlobalGeohash
+.then(geohash => {
+  // do you thing.
+})
+.catch(error => {
+  // do you thing.
+})
 ```
 
 显示 App 右上角的分享按钮，并定制分享文案
@@ -41,17 +45,17 @@ hybridAPI.share({
   // 注意！imgUrl 和 link 必须是以 http 或 https 开头的绝对 URL
   url: '分享链接',
   image_url: '分享图标'
-});
+})
 ```
 
 下单选择红包
 ```javascript
-hybridAPI.selectHongbao(hongbaosn); // hongbaosn为选中红包的SN，必传项
+hybridAPI.selectHongbao(hongbaosn) // hongbaosn为选中红包的SN，必传项
 ```
 
 设置页面的title
 ```javascript
-hybridAPI.setTitle(title); // title为页面的title
+hybridAPI.setTitle(title) // title为页面的title
 ```
 
 获取用户位置定位状态
@@ -62,12 +66,12 @@ hybridAPI.getLocateStatus(status => {
   // 1: 定位中
   // 2: 定位成功
   // 3: 定位失败
-});
+})
 ```
 
 关闭当前页面
 ```javascript
-hybridAPI.closePage();
+hybridAPI.closePage()
 ```
 
 获取当前登录用户的 userID
@@ -95,23 +99,20 @@ hybridAPI.sharePanel({
   text: '分享副标题',
   url: '分享链接',
   image_url: '分享图标'
-});
+})
 
-其中分享链接里增加了一个type参数，用于识别不同的分享平台，免去在分享链接的另外获取。值为['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone']其中之一
+> 其中分享链接里增加了一个type参数，用于识别不同的分享平台，免去在分享链接的另外获取。值为['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone']其中之一
 ```
 
 ### 3.开发
 
-安装依赖
-
-```
+安装依赖 / 开发
+``` shell
 npm install
+npm run dev
 ```
+
 编译打包
-
+``` shell
+npm run build
 ```
-rollup -c
-```
-参考：
-
-[http://rollupjs.org/guide/](http://rollupjs.org/guide/)

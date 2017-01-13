@@ -99,6 +99,14 @@ export default {
     invokeMethod('closePage');
   },
 
+  showRightBarItems(items) {
+    invokeMethod('showRightBarItems', items);
+  },
+
+  removeRightBarItems() {
+    invokeMethod('removeRightBarItems');
+  },
+
   getUserID(callback) {
     if (isFunction(callback)) {
       invokeMethod('getUserID', callback);

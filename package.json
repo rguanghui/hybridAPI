@@ -1,6 +1,6 @@
 {
   "name": "eleme-hybrid-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Eleme App Hybrid app api",
   "main": "hybrid-api.js",
   "scripts": {

@@ -10,8 +10,19 @@ import bridgeProtocol from 'bridge-protocol';
 
 // polyfill for window onload won't fire
 if (!legacy) {
-  const METHODS = ['getGlobalGeohash', 'showShareButton', 'selectedHongbao', 'selectHongbao',
-    'selectCoupon', 'getLocateStatus', 'setTitle', 'closePage', 'getUserID'];
+  const METHODS = [
+    'getGlobalGeohash',
+    'showShareButton',
+    'selectedHongbao',
+    'selectHongbao',
+    'selectCoupon',
+    'getLocateStatus',
+    'setTitle',
+    'closePage',
+    'getUserID',
+    'showRightBarItems',
+    'removeRightBarItems',
+  ];
   bridgeProtocol.inject('EJsBridge', METHODS);
 }
 
@@ -97,6 +108,14 @@ export default {
 
   closePage() {
     invokeMethod('closePage');
+  },
+
+  setRightMenu(items) {
+    invokeMethod('showRightBarItems', items);
+  },
+
+  clearRightMenu() {
+    invokeMethod('removeRightBarItems');
   },
 
   getUserID(callback) {

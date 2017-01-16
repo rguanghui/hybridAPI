@@ -7,6 +7,7 @@ import {
   invokeMethodWithError
 } from './util';
 import bridgeProtocol from 'bridge-protocol';
+import { setRightMenu, clearRightMenu } from './menu';
 
 // polyfill for window onload won't fire
 if (!legacy) {
@@ -110,14 +111,6 @@ export default {
     invokeMethod('closePage');
   },
 
-  setRightMenu(items) {
-    invokeMethod('showRightBarItems', items);
-  },
-
-  clearRightMenu() {
-    invokeMethod('removeRightBarItems');
-  },
-
   getUserID(callback) {
     if (isFunction(callback)) {
       invokeMethod('getUserID', callback);
@@ -170,4 +163,7 @@ export default {
     }, {});
     location.href = `eleme://sns_share?source=${options.source}&${toQueryString(param)}`
   },
+
+  setRightMenu,
+  clearRightMenu,
 }

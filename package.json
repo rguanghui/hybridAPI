@@ -1,6 +1,6 @@
 {
   "name": "eleme-hybrid-api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Eleme App Hybrid app api",
   "main": "hybrid-api.js",
   "scripts": {
@@ -24,6 +24,6 @@
     "webpack": "^2.2.0-rc.4"
   },
   "dependencies": {
-    "bridge-protocol": "0.0.6"
+    "bridge-protocol": "0.0.8"
   }
 }

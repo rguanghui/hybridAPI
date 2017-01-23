@@ -6,7 +6,7 @@ import {
   isFunction,
   invokeMethodWithError
 } from './util';
-import bridgeProtocol from 'bridge-protocol';
+import * as bridgeProtocol from 'bridge-protocol';
 import { setRightMenu, clearRightMenu } from './menu';
 
 // polyfill for window onload won't fire

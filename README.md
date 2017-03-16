@@ -106,13 +106,21 @@ hybridAPI.sharePanel({
 
 ### 3.开发
 
-安装依赖 / 开发
-``` shell
+安装依赖:
+
+```shell
 npm install
-npm run dev
 ```
 
-编译打包
-``` shell
+编译打包:
+
+```shell
 npm run build
 ```
+
+开发环境:
+
+* 使用"饿了么 App"(Android 为例)
+* `Change engpoint` 设置为 `production`
+* 在 `Url/Scheme test` 通过网址打开, 主要需要 `*.ele.me` 来保证变量注入
+* 通过网络代理等方式, 对应域名指向开发的环境

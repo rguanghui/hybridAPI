@@ -127,7 +127,7 @@ hybridAPI.default.exitConfirm({
 });
 ```
 
-给定应用包名查询是否安装:
+给定应用包名查询是否安装(Android):
 
 ```js
 hybridAPI.default.checkPackages(['com.tencent.mm'], function (result) {
@@ -135,7 +135,7 @@ hybridAPI.default.checkPackages(['com.tencent.mm'], function (result) {
 });
 ```
 
-打开传入包名的 app:
+打开传入包名的 App (Android):
 
 ```js
 hybridAPI.default.openPackage('com.tencent.mm');
@@ -155,9 +155,14 @@ npm install
 npm run build
 ```
 
-开发环境:
+开发环境(Android):
 
-* 使用"饿了么 App"(Android 为例)
-* `Change engpoint` 设置为 `production`
+* 使用开发版"饿了么 App", `Change engpoint` 设置为 `production`
 * 在 `Url/Scheme test` 通过网址打开, 主要需要 `*.ele.me` 来保证变量注入
 * 通过网络代理等方式, 对应域名指向开发的环境
+
+开发环境(iOS):
+
+* 使用"饿了么 App", 处于 `production` 模式
+* 在 `webViewTest` 当中通过 `console` 入口打开需要的网址
+* 通过网络代理, 指向开发环境

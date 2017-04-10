@@ -23,7 +23,7 @@ if (!legacy) {
     'getUserID',
     'showRightBarItems',
     'removeRightBarItems',
-    'shouldShowNewRetailCartRedBadge',
+    'shouldShowNewRetailRedBadge',
   ];
   bridgeProtocol.inject('EJsBridge', METHODS);
 }
@@ -168,13 +168,13 @@ export default {
   setRightMenu,
   clearRightMenu,
 
-  shouldShowNewRetailCartRedBadge(callback) {
+  shouldShowNewRetailRedBadge(callback) {
     if (isFunction(callback)) {
-      invokeMethod('shouldShowNewRetailCartRedBadge', callback);
+      invokeMethod('shouldShowNewRetailRedBadge', callback);
     } else {
       return new Promise((resolve, reject) => {
         try {
-          invokeMethodWithError('shouldShowNewRetailCartRedBadge', reject, status => {
+          invokeMethodWithError('shouldShowNewRetailRedBadge', reject, status => {
             resolve(status);
           });
         } catch(error) {

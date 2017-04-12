@@ -111,7 +111,7 @@ hybridAPI.sharePanel({
 当前网络状态:
 
 ```js
-hybridAPI.default.networkType(function (status) {
+hybridAPI.networkType(function (status) {
   alert('NetworkType: ' + status);
 });
 ```
@@ -119,7 +119,7 @@ hybridAPI.default.networkType(function (status) {
 退出确认:
 
 ```js
-hybridAPI.default.exitConfirm({
+hybridAPI.exitConfirm({
   title: '提示',
   content: '是否确认关闭页面?',
   yes_text: '关闭页面',
@@ -130,7 +130,7 @@ hybridAPI.default.exitConfirm({
 给定应用包名查询是否安装(Android):
 
 ```js
-hybridAPI.default.checkPackages(['com.tencent.mm'], function (result) {
+hybridAPI.checkPackages(['com.tencent.mm'], function (result) {
   alert('PackagesStatus: ' + JSON.stringify(result));
 });
 ```
@@ -138,7 +138,7 @@ hybridAPI.default.checkPackages(['com.tencent.mm'], function (result) {
 打开传入包名的 App (Android):
 
 ```js
-hybridAPI.default.openPackage('com.tencent.mm');
+hybridAPI.openPackage('com.tencent.mm');
 ```
 
 ### 3.开发

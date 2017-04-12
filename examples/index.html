@@ -17,6 +17,8 @@
       <button id="getGlobalGeohash">getGlobalGeohash</button>
       <p>获取定位状态</p>
       <button id="getLocateStatus">getLocateStatus</button>
+      <p>当前网络状态</p>
+      <button id="networkType">networkType</button>
     </div>
     <div class="buttonGroup">
       <h3>页面操作</h3>
@@ -24,6 +26,8 @@
       <button id="setTitle">setTitle</button>
       <p>关闭页面</p>
       <button id="closePage">closePage</button>
+      <p>退出确认</p>
+      <button id="exitConfirm">exitConfirm(然后按返回键)</button>
     </div>
     <div class="buttonGroup">
       <h3>用户信息</h3>
@@ -39,37 +43,59 @@
       <p>下单选择红包</p>
       <button id="selectHongbao">selectHongbao</button>
     </div>
+    <div class="buttonGroup">
+      <h3>应用接口</h3>
+      <p>给定应用包名查询是否安装</p>
+      <button id="checkPackages">checkPackages(Android)</button>
+      <p>打开传入包名的 app</p>
+      <button id="openPackage">openPackage(Android)</button>
+    </div>
     <script src="../hybrid-api.js"></script>
     <script>
       (function () {
         document.querySelector('#getGlobalGeohash').addEventListener('click', function () {
-          hybridAPI.getGlobalGeohash(function(geohash) {
+          hybridAPI.default.getGlobalGeohash(function(geohash) {
             alert('GeoHash: ' + geohash);
           });
         });
 
         document.querySelector('#getLocateStatus').addEventListener('click', function () {
-          hybridAPI.getLocateStatus(function (status) {
+          hybridAPI.default.getLocateStatus(function (status) {
             alert('LocateStatus: ' + status);
           });
         });
 
+        document.querySelector('#networkType').addEventListener('click', function () {
+          hybridAPI.default.networkType(function (status) {
+            alert('NetworkType: ' + status);
+          });
+        });
+
         document.querySelector('#getUserID').addEventListener('click', function () {
-          hybridAPI.getUserID(function (id) {
+          hybridAPI.default.getUserID(function (id) {
             alert('UserId: ' + id);
           });
         });
 
         document.querySelector('#closePage').addEventListener('click', function () {
-          hybridAPI.closePage();
+          hybridAPI.default.closePage();
+        });
+
+        document.querySelector('#exitConfirm').addEventListener('click', function () {
+          hybridAPI.default.exitConfirm({
+            title: '提示',
+            content: '是否确认关闭页面?',
+            yes_text: '关闭页面',
+            no_text: '取消'
+          });
         });
 
         document.querySelector('#setTitle').addEventListener('click', function () {
-          hybridAPI.setTitle('Test Title');
+          hybridAPI.default.setTitle('Test Title');
         });
 
         document.querySelector('#sharePanel').addEventListener('click', function () {
-          hybridAPI.sharePanel({
+          hybridAPI.default.sharePanel({
             source: '',
             targets: ['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone'],
             title: '分享标题',
@@ -80,7 +106,7 @@
         });
 
         document.querySelector('#share').addEventListener('click', function () {
-          hybridAPI.share({
+          hybridAPI.default.share({
             title: '饿了么积分商城，任性兑换不花钱',
             text: '叫外卖，上饿了么，免费好礼等你来拿',
             weibo: '饿了么积分商城，任性兑换不花钱。叫外卖，上饿了么，免费好礼等你来拿。' + location.href + '（分享自@饿了么网上订餐）',
@@ -90,8 +116,19 @@
         });
 
         document.querySelector('#selectHongbao').addEventListener('click', function () {
-          hybridAPI.selectHongbao('20160318155810312233218022384');
+          hybridAPI.default.selectHongbao('20160318155810312233218022384');
         });
+
+        document.querySelector('#checkPackages').addEventListener('click', function () {
+          hybridAPI.default.checkPackages(['com.tencent.mm'], function (result) {
+            alert('PackagesStatus: ' + JSON.stringify(result));
+          });
+        });
+
+        document.querySelector('#openPackage').addEventListener('click', function () {
+          hybridAPI.default.openPackage('com.tencent.mm');
+        });
+
       })();
     </script>
   </body>

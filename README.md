@@ -11,6 +11,10 @@
 3. 获取用户位置定位状态。v5.10.1
 3. 关闭当前页面。v5.12.1
 1. 唤出 App 分享按钮panel，并定制分享按钮，分享文案，分享来源 v5.4甚至更早:joy:
+1. 给定应用包名查询是否安装。 v7.2(Android)
+1. 打开传入包名的 app。 v7.2(Android)
+1. 当前网络状态。 v7.5
+1. 退出确认。 v?
 
 ## 安装与使用
 
@@ -104,15 +108,61 @@ hybridAPI.sharePanel({
 > 其中分享链接里增加了一个type参数，用于识别不同的分享平台，免去在分享链接的另外获取。值为['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone']其中之一
 ```
 
+当前网络状态:
+
+```js
+hybridAPI.networkType(function (status) {
+  alert('NetworkType: ' + status);
+});
+```
+
+退出确认:
+
+```js
+hybridAPI.exitConfirm({
+  title: '提示',
+  content: '是否确认关闭页面?',
+  yes_text: '关闭页面',
+  no_text: '取消'
+});
+```
+
+给定应用包名查询是否安装(Android):
+
+```js
+hybridAPI.checkPackages(['com.tencent.mm'], function (result) {
+  alert('PackagesStatus: ' + JSON.stringify(result));
+});
+```
+
+打开传入包名的 App (Android):
+
+```js
+hybridAPI.openPackage('com.tencent.mm');
+```
+
 ### 3.开发
 
-安装依赖 / 开发
-``` shell
+安装依赖:
+
+```shell
 npm install
-npm run dev
 ```
 
-编译打包
-``` shell
+编译打包:
+
+```shell
 npm run build
 ```
+
+开发环境(Android):
+
+* 使用开发版"饿了么 App", `Change engpoint` 设置为 `production`
+* 在 `Url/Scheme test` 通过网址打开, 主要需要 `*.ele.me` 来保证变量注入
+* 通过网络代理等方式, 对应域名指向开发的环境
+
+开发环境(iOS):
+
+* 使用"饿了么 App", 处于 `production` 模式
+* 在 `webViewTest` 当中通过 `console` 入口打开需要的网址
+* 通过网络代理, 指向开发环境

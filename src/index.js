@@ -24,6 +24,10 @@ if (!legacy) {
     'showRightBarItems',
     'removeRightBarItems',
     'shouldShowNewRetailRedBadge',
+    'networkType',
+    'exitConfirm',
+    'checkPackages',
+    'openPackage'
   ];
   bridgeProtocol.inject('EJsBridge', METHODS);
 }
@@ -104,12 +108,32 @@ export default {
     }
   },
 
+  networkType(callback) {
+    if (isFunction(callback)) {
+      invokeMethod('networkType', callback);
+    } else {
+      return new Promise((resolve, reject) => {
+        try {
+          invokeMethodWithError('networkType', reject, status => {
+            resulve(status);
+          });
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }
+  },
+
   setTitle(title) {
     invokeMethod('setTitle', title);
   },
 
   closePage() {
     invokeMethod('closePage');
+  },
+
+  exitConfirm(options) {
+    invokeMethod('exitConfirm', options);
   },
 
   getUserID(callback) {
@@ -163,6 +187,26 @@ export default {
       return prev;
     }, {});
     location.href = `eleme://sns_share?source=${options.source}&${toQueryString(param)}`
+  },
+
+  checkPackages(options, callback) {
+    if (isFunction(callback)) {
+      invokeMethod('checkPackages', options, callback);
+    } else {
+      return new Promise((resolve, reject) => {
+        try {
+          invokeMethodWithError('checkPackages', options, reject, status => {
+            resulve(status);
+          });
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }
+  },
+
+  openPackage(packageName) {
+    invokeMethod('openPackage', packageName);
   },
 
   setRightMenu,

@@ -1,4 +1,4 @@
-import { invokeMethod } from './util'
+import { invokeMethod } from '../util'
 
 const events = Object.create(null)
 const listener = (type, name) => {

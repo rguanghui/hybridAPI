@@ -1,37 +1,37 @@
-import { legacy } from './env';
+import { legacy } from './env'
 
 export const parseJSON = function(string) {
   try {
-    return JSON.parse(string) || {};
+    return JSON.parse(string) || {}
   } catch (error) {
-    return false;
+    return false
   }
-};
+}
 
 export const toQueryString = function(object) {
   return Object.keys(object).map(function(key) {
-    return encodeURIComponent(key) + '=' + encodeURIComponent(object[key]);
-  }).join('&');
-};
+    return encodeURIComponent(key) + '=' + encodeURIComponent(object[key])
+  }).join('&')
+}
 
 export const isFunction = value => {
-  let tag = value instanceof Object ? Object.prototype.toString.call(value) : '';
-  return tag === '[object Function]' || tag === '[object GeneratorFunction]';
-};
+  let tag = value instanceof Object ? Object.prototype.toString.call(value) : ''
+  return tag === '[object Function]' || tag === '[object GeneratorFunction]'
+}
 
 export const invokeMethod = function(method, ...args) {
-  let lastParam = args[args.length - 1];
-  let reject;
+  let lastParam = args[args.length - 1]
+  let reject
   if (lastParam && lastParam.isReject) {
-    reject = args.pop();
+    reject = args.pop()
   }
-  let webViewJSBridge = window.WebViewJavascriptBridge;
-  const INJECTED_EVENT_NAME = legacy ? 'WebViewJavascriptBridgeInjectFinishedReady' : 'WebViewJavascriptBridgeReady';
+  let webViewJSBridge = window.WebViewJavascriptBridge
+  const INJECTED_EVENT_NAME = legacy ? 'WebViewJavascriptBridgeInjectFinishedReady' : 'WebViewJavascriptBridgeReady'
 
   const doInvokeMethod = function() {
-    webViewJSBridge = window.WebViewJavascriptBridge;
+    webViewJSBridge = window.WebViewJavascriptBridge
     try { // Fix for Android 5.8.3
-      webViewJSBridge.init();  
+      webViewJSBridge.init()  
     } catch(error) {
     }
 
@@ -41,28 +41,28 @@ export const invokeMethod = function(method, ...args) {
        */
       try { // Fix for Android 5.8.3
         if (window.EJsBridge && window.EJsBridge[method]) {
-          window.EJsBridge[method].apply(window.EJsBridge, args);
+          window.EJsBridge[method].apply(window.EJsBridge, args)
         } else if (window.JsBridge && window.JsBridge[method]) {
-          window.JsBridge[method].apply(window.JsBridge, args);
+          window.JsBridge[method].apply(window.JsBridge, args)
         } else if (webViewJSBridge) {
-          webViewJSBridge.callHandler(method, ...args);
+          webViewJSBridge.callHandler(method, ...args)
         }
       } catch(error) {
         if (reject) {
-          reject(error);
+          reject(error)
         }
       }
-    }, 0);
-  };
+    }, 0)
+  }
 
   if (window.EJsBridge || window.JsBridge || webViewJSBridge) {
-    doInvokeMethod();
+    doInvokeMethod()
   } else {
-    document.addEventListener(INJECTED_EVENT_NAME, doInvokeMethod);
+    document.addEventListener(INJECTED_EVENT_NAME, doInvokeMethod)
   }
-};
+}
 
 export const invokeMethodWithError = function(method, reject, ...args) {
-  reject.isReject = true;
-  invokeMethod(method, ...args, reject);
-};
+  reject.isReject = true
+  invokeMethod(method, ...args, reject)
+}

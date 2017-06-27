@@ -15,6 +15,7 @@
 1. 打开传入包名的 app。 v7.2(Android)
 1. 当前网络状态。 v7.5
 1. 退出确认。 v?
+1. 获取手机通信录 v7.9(iOS>=9.0 不支持安卓)
 
 ## 安装与使用
 
@@ -139,6 +140,14 @@ hybridAPI.checkPackages(['com.tencent.mm'], function (result) {
 
 ```js
 hybridAPI.openPackage('com.tencent.mm');
+```
+
+获取手机通信录 (iOS):
+
+```js
+// 从通信录中取 n 个联系人
+hybridAPI.contactList(n);           // Promise
+hybridAPI.contactList(n, callback); // callback
 ```
 
 ### 3.开发

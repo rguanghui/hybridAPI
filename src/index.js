@@ -10,6 +10,7 @@ import * as bridgeProtocol from 'bridge-protocol'
 import { setRightMenu, clearRightMenu } from './apis/menu'
 import pay from './apis/pay'
 import getTopBarHeight from './apis/bar'
+import contactList from './apis/contactList'
 
 // polyfill for window onload won't fire
 if (!legacy) {
@@ -30,7 +31,8 @@ if (!legacy) {
     'exitConfirm',
     'checkPackages',
     'openPackage',
-    'defaultHeightOfTopBar'
+    'defaultHeightOfTopBar',
+    'contactList'
   ]
   bridgeProtocol.inject('EJsBridge', METHODS)
 }
@@ -234,4 +236,6 @@ export default {
   pay,
 
   getTopBarHeight,
+
+  contactList,
 }

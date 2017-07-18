@@ -8,6 +8,7 @@ import {
 } from './util'
 import * as bridgeProtocol from 'bridge-protocol'
 import { setRightMenu, clearRightMenu } from './apis/menu'
+import { hookBack, cancelHookBack } from './apis/back'
 import pay from './apis/pay'
 import getTopBarHeight from './apis/bar'
 import contactList from './apis/contactList'
@@ -26,6 +27,7 @@ if (!legacy) {
     'getUserID',
     'showRightBarItems',
     'removeRightBarItems',
+    'hookGoback',
     'shouldShowNewRetailRedBadge',
     'networkType',
     'exitConfirm',
@@ -216,6 +218,9 @@ export default {
 
   setRightMenu,
   clearRightMenu,
+
+  hookBack,
+  cancelHookBack,
 
   shouldShowNewRetailRedBadge(callback) {
     if (isFunction(callback)) {

@@ -6,13 +6,14 @@ const listener = (type, name) => {
 }
 
 export const hookBack = ({ eventName, action }) => {
+  if (typeof action !== 'function') return
   if (typeof events[eventName] === 'function') {
     listener('remove', eventName)
   }
 
   events[eventName] = event => {
     setTimeout(() => {
-      action(event.detail)
+      action(event && event.detail)
     }, 0)
   }
   listener('add', eventName)

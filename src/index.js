@@ -39,7 +39,7 @@ if (!legacy) {
   bridgeProtocol.inject('EJsBridge', METHODS)
 }
 
-export default {
+const hybridAPI = {
   getGlobalGeohash(callback) {
     const args = legacy ? [''] : []
 
@@ -244,3 +244,7 @@ export default {
 
   contactList,
 }
+
+hybridAPI.default = hybridAPI
+
+export default hybridAPI

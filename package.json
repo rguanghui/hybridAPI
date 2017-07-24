@@ -1,10 +1,9 @@
 {
   "name": "eleme-hybrid-api",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Eleme App Hybrid app api",
   "main": "hybrid-api.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p",
     "prepublish": "npm run build"
   },
@@ -20,8 +19,8 @@
   "homepage": "https://github.com/eleme/hybirdAPI#readme",
   "devDependencies": {
     "buble": "^0.15.2",
-    "buble-loader": "^0.4.0",
-    "webpack": "v2.2.1"
+    "buble-loader": "^0.4.1",
+    "webpack": "v3.3.0"
   },
   "dependencies": {
     "bridge-protocol": "0.0.8"

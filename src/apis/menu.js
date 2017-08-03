@@ -22,7 +22,12 @@ export const setRightMenu = items => {
     events[eventName] = eventHandle
     listener('add', eventName)
 
-    params.push({ title: item.text, eventName })
+    params.push({
+      title: item.text,
+      iconHash: item.iconHash,
+      overflow: !!item.overflow,
+      eventName,
+    })
   })
 
   invokeMethod('showRightBarItems', params)

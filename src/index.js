@@ -28,6 +28,7 @@ if (!legacy) {
     'showRightBarItems',
     'removeRightBarItems',
     'hookGoback',
+    'setNavStyle',
     'shouldShowNewRetailRedBadge',
     'networkType',
     'exitConfirm',
@@ -221,6 +222,13 @@ const hybridAPI = {
 
   hookBack,
   cancelHookBack,
+
+  setNavStyle({ navType, navColor, navTextColor }) {
+    invokeMethod('setNavStyle', {
+      navType: String(navType),
+      navColor, navTextColor,
+    });
+  },
 
   shouldShowNewRetailRedBadge(callback) {
     if (isFunction(callback)) {

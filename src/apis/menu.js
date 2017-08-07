@@ -5,7 +5,7 @@ const listener = (type, name) => {
   document[`${type}EventListener`](name, events[name], false)
 }
 
-// [{ text, eventName, action }]
+// [{ text, eventName, action, iconHash, overflow }]
 export const setRightMenu = items => {
   const params = []
 

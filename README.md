@@ -128,6 +128,32 @@ hybridAPI.exitConfirm({
 });
 ```
 
+设置右侧菜单：
+
+```js
+hybridAPI.setRightMenu([
+  { text, eventName, action, iconHash, overflow },
+])
+hybridAPI.clearRightMenu()
+```
+
+拦截返回按钮：
+
+```js
+hybridAPI.hookBack({ eventName, action })
+hybridAPI.cancelHookBack()
+```
+
+动态设置导航栏样式：（7.15 支持）
+
+```js
+hybridAPI.setNavStyle({
+  navType: '1', // 不用担心，数字会被转为字符串
+  navColor: '#ffffff', // 必须为 6 位 16 进制，传空字符串为默认蓝色（iOS 需要 7.16）
+  navTextColor: '#000000', // 必须为 6 位 16 进制
+})
+```
+
 给定应用包名查询是否安装(Android):
 
 ```js

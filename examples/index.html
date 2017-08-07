@@ -38,6 +38,8 @@
       <h3>分享接口</h3>
       <p>唤出 App 分享按钮pannel，并定制分享按钮，分享文案，分享来源</p>
       <button id="sharePanel">sharePanel</button>
+      <p>唤出 App 分享按钮pannel，并定制分享按钮，分享图片</p>
+      <button id="sharePanelImageOnly">sharePanelImageOnly</button>
       <p>显示 App 右上角的分享按钮，并定制分享文案</p>
       <button id="share">share</button>
       <p>下单选择红包</p>
@@ -102,6 +104,18 @@
             text: '分享副标题',
             url: '分享链接',
             image_url: '分享图标'
+          });
+        });
+
+        document.querySelector('#sharePanelImageOnly').addEventListener('click', function () {
+          hybridAPI.default.sharePanel({
+            source: '',
+            targets: ['weixin', 'weixin_timeline', 'qq'],
+            title: '分享标题',
+            text: '分享副标题',
+            url: '分享链接',
+            image_url: 'https://fuss10.elemecdn.com/7/ff/fa74fa510b1296cac782d29ee7b07jpeg.jpeg',
+            image_only: true,
           });
         });
 

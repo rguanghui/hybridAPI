@@ -23,15 +23,9 @@ export default params => {
     action(callbackParams)
   }, false)
 
-  // 7.17 之前的版本用 eleme://pay 之后版本用 eleme://web_pay_result
-  let paramString = `merchant_id=${merchantId}&merchant_order_no=${merchantOrderNo}`
-  let schemeURL = `eleme://pay?${paramString}`
-
-  if (compareVersion('7.17')) {
-    schemeURL += `&event_name=${eventName}`
-  } else {
-    schemeURL += `&return_url=${encodeURIComponent(`eleme://web_pay_result?${paramString}&event_name=${eventName}`)}`
-  }
+  let paramString = `merchant_id=${merchantId}&merchant_order_no=${merchantOrderNo}&event_name=${eventName}`
+  let returnURL = `eleme://web_pay_result?${paramString}&event_name=${eventName}`
+  let schemeURL = `eleme://pay?${paramString}&return_url=${encodeURIComponent(returnURL)}`
 
   if (xShard) {
     schemeURL += `&x_shard=${xShard}`

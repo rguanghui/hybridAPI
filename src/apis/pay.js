@@ -30,7 +30,7 @@ export default params => {
   if (compareVersion('7.17')) {
     schemeURL += `&event_name=${eventName}`
   } else {
-    schemeURL += `&return_url=${paramString}&event_name=${eventName}`
+    schemeURL += `&return_url=eleme://web_pay_result?${paramString}&event_name=${eventName}`
   }
 
   if (xShard) {

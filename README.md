@@ -25,6 +25,7 @@
 <!-- 引入 HybridAPI -->
 <script src="//github.elemecdn.com/uglifyjs!eleme/hybridAPI/${version}/hybrid-api.js"></script>
 ```
+将上面的`${version}`更改为你想要的版本。例如 1.3.0，请到[标签](https://git.elenet.me/h5/hybridAPI/tags)查看版本
 
 ### 2. 使用
 

@@ -19,6 +19,28 @@ export const isFunction = value => {
   return tag === '[object Function]' || tag === '[object GeneratorFunction]'
 }
 
+export const compareVersion = (compare, beCompared) => {
+  if (!beCompared) {
+    beCompared = (window.navigator.userAgent.match(/Eleme\/([\d|\.]+)/i) || [])[1]
+    if (!beCompared) return false
+  }
+
+  compare = compare.split('.')
+  beCompared = beCompared.split('.')
+
+  let result
+  compare.forEach((compareItem, index) => {
+    let beComparedItem = beCompared[index]
+    if (typeof beComparedItem === 'undefined') beComparedItem = 0
+    if (typeof result !== 'undefined') return
+
+    let difference = Number(compareItem) - Number(beComparedItem)
+    if (difference === 0) return
+    result = difference > 0
+  })
+  return !!result
+ }
+
 export const invokeMethod = function(method, ...args) {
   let lastParam = args[args.length - 1]
   let reject
@@ -31,7 +53,7 @@ export const invokeMethod = function(method, ...args) {
   const doInvokeMethod = function() {
     webViewJSBridge = window.WebViewJavascriptBridge
     try { // Fix for Android 5.8.3
-      webViewJSBridge.init()  
+      webViewJSBridge.init()
     } catch(error) {
     }
 

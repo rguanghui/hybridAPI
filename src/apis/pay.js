@@ -1,4 +1,4 @@
-import { invokeMethod } from '../util'
+import { invokeMethod, compareVersion } from '../util'
 
 /**
  * @param {Object} params app scheme 参数
@@ -23,7 +23,16 @@ export default params => {
     action(callbackParams)
   }, false)
 
-  let schemeURL = `eleme://pay?merchant_id=${merchantId}&merchant_order_no=${merchantOrderNo}&event_name=${eventName}`
+  // 7.17 之前的版本用 eleme://pay 之后版本用 eleme://web_pay_result
+  let paramString = 'merchant_id=${merchantId}&merchant_order_no=${merchantOrderNo}'
+  let schemeURL = `eleme://pay?${paramString}`
+
+  if (compareVersion('7.17')) {
+    schemeURL += '&event_name=${eventName}'
+  } else {
+    schemeURL += '&return_url=${paramString}&event_name=${eventName}'
+  }
+
   if (xShard) {
     schemeURL += `&x_shard=${xShard}`
   }

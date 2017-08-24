@@ -24,7 +24,7 @@ export default params => {
   }, false)
 
   let paramString = `merchant_id=${merchantId}&merchant_order_no=${merchantOrderNo}&event_name=${eventName}`
-  let returnURL = `eleme://web_pay_result?${paramString}&event_name=${eventName}`
+  let returnURL = `eleme://web_pay_result?${paramString}`
   let schemeURL = `eleme://pay?${paramString}&return_url=${encodeURIComponent(returnURL)}`
 
   if (xShard) {

@@ -192,6 +192,7 @@ const hybridAPI = {
         url: `${url}type=${item}`,
         image_url: options.image_url,
         image_only: options.image_only ? 1 : 0,
+        media: options.media || '',
       })
       return prev
     }, {})

@@ -106,6 +106,7 @@ hybridAPI.sharePanel({
   url: '分享链接',
   image_url: '分享图标',
   image_only: true, // 7.14 新增，分享整张图片(image_url)，只支持微信、朋友圈、QQ。
+  media: 'screenshot', // 7.17 新增，分享当前 webview 截图，只支持微信、朋友圈、QQ。
 })
 
 > 其中分享链接里增加了一个type参数，用于识别不同的分享平台，免去在分享链接的另外获取。值为['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone']其中之一

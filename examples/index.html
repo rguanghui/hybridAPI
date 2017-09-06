@@ -52,6 +52,11 @@
       <p>打开传入包名的 app</p>
       <button id="openPackage">openPackage(Android)</button>
     </div>
+    <div class="buttonGroup">
+      <h3>设置导航栏</h3>
+      <button id="setNav">setNav</button>
+      <button onclick="location.reload()">刷新</button>
+    </div>
     <script src="../hybrid-api.js"></script>
     <script>
       (function () {
@@ -143,6 +148,34 @@
           hybridAPI.default.openPackage('com.tencent.mm');
         });
 
+        document.querySelector('#setNav').addEventListener('click', function () {
+          var random = function() {
+            return Math.random() > .5;
+          };
+          var randomColor = function() {
+            var color = '#' + Math.round(Math.random() * 0xffffffff).toString(16);
+            if (random()) {
+              color += ',#' + Math.round(Math.random() * 0xffffffff).toString(16);
+            }
+            return color;
+          };
+          var params = {
+            immersive: random(),
+            navBg: random() ? randomColor() : {
+              from: randomColor(),
+              to: randomColor(),
+              direction: random() ? 0 : 1,
+            },
+            navText: random() ? randomColor() : {
+              from: randomColor(),
+              to: randomColor(),
+            },
+            statusText: { solid: random() },
+            triggerHeight: Math.round(100 * Math.random()),
+          };
+          alert(JSON.stringify(params, null, '  '));
+          hybridAPI.default.setNav(params);
+        });
       })();
     </script>
   </body>

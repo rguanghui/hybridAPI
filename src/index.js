@@ -12,6 +12,7 @@ import { hookBack, cancelHookBack } from './apis/back'
 import pay from './apis/pay'
 import getTopBarHeight from './apis/bar'
 import contactList from './apis/contactList'
+import setNav from './apis/nav'
 
 // polyfill for window onload won't fire
 if (!legacy) {
@@ -35,7 +36,12 @@ if (!legacy) {
     'checkPackages',
     'openPackage',
     'defaultHeightOfTopBar',
-    'contactList'
+    'contactList',
+    'setImmersiveMode',
+    'setLightStatusBar',
+    'setNavBgColor',
+    'setNavTextColor',
+    'setTriggerHeight',
   ]
   bridgeProtocol.inject('EJsBridge', METHODS)
 }
@@ -253,6 +259,8 @@ const hybridAPI = {
   getTopBarHeight,
 
   contactList,
+
+  setNav,
 }
 
 hybridAPI.default = hybridAPI

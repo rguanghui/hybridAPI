@@ -16,6 +16,7 @@
 1. 当前网络状态。 v7.5
 1. 退出确认。 v?
 1. 获取手机通信录 v7.9(iOS>=9.0 不支持安卓)
+1. 动态设置导航栏样式 v7.15 (v7.18 更改 API)
 
 ## 安装与使用
 
@@ -147,16 +148,6 @@ hybridAPI.hookBack({ eventName, action })
 hybridAPI.cancelHookBack()
 ```
 
-动态设置导航栏样式：（7.15 支持）
-
-```js
-hybridAPI.setNavStyle({
-  navType: '1', // 不用担心，数字会被转为字符串
-  navColor: '#ffffff', // 必须为 6 位 16 进制，传空字符串为默认蓝色（iOS 需要 7.16）
-  navTextColor: '#000000', // 必须为 6 位 16 进制
-})
-```
-
 给定应用包名查询是否安装(Android):
 
 ```js
@@ -179,6 +170,49 @@ hybridAPI.contactList(n);           // Promise
 hybridAPI.contactList(n, callback); // callback
 ```
 
+动态设置导航栏样式：
+
+```js
+// 7.15 ~ 7.17
+hybridAPI.setNavStyle({
+  navType: '1', // 不用担心，数字会被转为字符串
+  navColor: '#ffffff', // 必须为 6 位 16 进制，传空字符串为默认蓝色（iOS 需要 7.16）
+  navTextColor: '#000000', // 必须为 6 位 16 进制
+})
+
+// 7.18 及以后
+/*
+  格式:
+  colorString: '#RRGGBB' 或 '#AARRGGBB' 或 '#RRGGBB,#AARRGGBB' (表示渐变)
+  colorOption: {
+    from: colorString,  // 起始颜色，即滚动高度小于 triggerHeight 时的颜色
+    to: colorString,    // 终止颜色，即滚动高度大于 triggerHeight 时的颜色
+    solid: colorString, // 恒定颜色，`solid` 和 `from/to` 选其一
+    direction: 0,       // 0: 从左到右渐变, 1: 从上到下渐变 (方向对文字颜色无效)
+  }
+*/
+// 以下参数都是可选的，不指定(undefined)即为不改变
+hybridAPI.setNav({
+  // 是否沉浸。注意：沉浸后导航栏底下的 webview 不可点击。
+  immersive: true,
+
+  // 这个滚动高度为分界线，在这以上取 `from` 颜色，以下取 `to` 颜色。
+  triggerHeight: 100,
+
+  // 系统状态栏文字颜色，可选值： 'black', 'white', 或下例对象
+  statusText: {
+    from: true, // true 为白色，false 为黑色
+    to: false,  // true 为白色，false 为黑色
+  },
+
+  // 导航栏背景色
+  navBg: colorString || colorOption,
+
+  // 导航栏文字颜色
+  navTextColor: colorString || colorOption,
+})
+```
+
 ### 3.开发
 
 安装依赖:
@@ -193,14 +227,12 @@ npm install
 npm run build
 ```
 
-开发环境(Android):
+开发/测试：
 
-* 使用开发版"饿了么 App", `Change engpoint` 设置为 `production`
-* 在 `Url/Scheme test` 通过网址打开, 主要需要 `*.ele.me` 来保证变量注入
-* 通过网络代理等方式, 对应域名指向开发的环境
-
-开发环境(iOS):
-
-* 使用"饿了么 App", 处于 `production` 模式
-* 在 `webViewTest` 当中通过 `console` 入口打开需要的网址
-* 通过网络代理, 指向开发环境
+* 执行 `npm run build`
+* serve 此项目 (可以放到 nginx 或 `npm i serve -g && serve`)
+* 将某 *.ele(net).me 的域名指向本机。以下提供几种方法：
+  - 利用 `faas proxy`
+  - 在 slack 任意频道输入 `/eleme dnsab 你的子域名.alpha.elenet.me 你的公司ip`
+  - 在 host 增加 `h5.test.ele.me 127.0.0.1`，手机连接本机 charles 代理
+* 在手机「饿了么 App」中扫码(http://get-app-link.faas.elenet.me/)打开对应域名，进入 `/examples` 路径

@@ -5,7 +5,8 @@
   "main": "hybrid-api.js",
   "scripts": {
     "build": "webpack -p",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "docs": "docsify serve ./docs"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "buble": "^0.15.2",
     "buble-loader": "^0.4.1",
+    "docsify-cli": "^4.1.10",
     "webpack": "v3.3.0"
   },
   "dependencies": {

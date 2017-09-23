@@ -3,4 +3,5 @@
   - [定位](apis/location.md)
   - [业务相关](apis/business.md)
   - [Native 收银台](apis/pay.md)
+  - [Navbar 样式](apis/setNav.md)
 - [编辑文档](dev.md)

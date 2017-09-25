@@ -20,6 +20,15 @@
       <p>当前网络状态</p>
       <button id="networkType">networkType</button>
     </div>
+
+    <div class="buttonGroup">
+      <button id="setRightMenu">set right menu</button>
+    </div>
+
+    <div class="buttonGroup">
+      <button id="concactList">get concact list</button>
+    </div>
+
     <div class="buttonGroup">
       <h3>页面操作</h3>
       <p>设置Title</p>
@@ -59,124 +68,137 @@
     </div>
     <script src="../hybrid-api.js"></script>
     <script>
-      (function () {
-        document.querySelector('#getGlobalGeohash').addEventListener('click', function () {
-          hybridAPI.default.getGlobalGeohash(function(geohash) {
-            alert('GeoHash: ' + geohash);
-          });
-        });
+      document.querySelector('#getGlobalGeohash').addEventListener('click', () => {
+        hybridAPI.getGlobalGeohash()
+        .then(geohash => alert(geohash))
+        .catch(error => alert(error))
+      })
 
-        document.querySelector('#getLocateStatus').addEventListener('click', function () {
-          hybridAPI.default.getLocateStatus(function (status) {
-            alert('LocateStatus: ' + status);
-          });
-        });
+      document.querySelector('#concactList').addEventListener('click', () => {
+        hybridAPI.contactList(10)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          alert(`获取失败了呢 ${JSON.stringify(error, null, 2)}`)
+        })
+      })
 
-        document.querySelector('#networkType').addEventListener('click', function () {
-          hybridAPI.default.networkType(function (status) {
-            alert('NetworkType: ' + status);
-          });
-        });
+      document.querySelector('#getLocateStatus').addEventListener('click', function () {
+        hybridAPI.getLocateStatus()
+        .then(status => alert(`LocateStatus: ${status}`))
+        .catch(error => alert(error))
+      })
 
-        document.querySelector('#getUserID').addEventListener('click', function () {
-          hybridAPI.default.getUserID(function (id) {
-            alert('UserId: ' + id);
-          });
-        });
+      document.querySelector('#networkType').addEventListener('click', function () {
+        hybridAPI.networkType()
+        .then(status => alert('NetworkType: ' + status))
+      })
 
-        document.querySelector('#closePage').addEventListener('click', function () {
-          hybridAPI.default.closePage();
-        });
+      document.querySelector('#getUserID').addEventListener('click', function () {
+        hybridAPI.getUserID()
+        .then(id => alert('UserId: ' + id))
+      })
 
-        document.querySelector('#exitConfirm').addEventListener('click', function () {
-          hybridAPI.default.exitConfirm({
-            title: '提示',
-            content: '是否确认关闭页面?',
-            yes_text: '关闭页面',
-            no_text: '取消'
-          });
-        });
+      document.querySelector('#closePage').addEventListener('click', function () {
+        hybridAPI.closePage()
+      })
 
-        document.querySelector('#setTitle').addEventListener('click', function () {
-          hybridAPI.default.setTitle('Test Title');
-        });
+      document.querySelector('#setRightMenu').addEventListener('click', function () {
+        hybridAPI.setRightMenu([{
+          text: '分享',
+          eventName: 'shareStage',
+          action() {
+            hybridAPI.sharePanel({
+              targets: ['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone'],
+            })
+          },
+        }])
+      })
 
-        document.querySelector('#sharePanel').addEventListener('click', function () {
-          hybridAPI.default.sharePanel({
-            source: '',
-            targets: ['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone'],
-            title: '分享标题',
-            text: '分享副标题',
-            url: '分享链接',
-            image_url: '分享图标'
-          });
-        });
+      document.querySelector('#exitConfirm').addEventListener('click', function () {
+        hybridAPI.exitConfirm({
+          title: '提示',
+          content: '是否确认关闭页面?',
+          yes_text: '关闭页面',
+          no_text: '取消'
+        })
+      })
 
-        document.querySelector('#sharePanelImageOnly').addEventListener('click', function () {
-          hybridAPI.default.sharePanel({
-            source: '',
-            targets: ['weixin', 'weixin_timeline', 'qq'],
-            title: '分享标题',
-            text: '分享副标题',
-            url: '分享链接',
-            image_url: 'https://fuss10.elemecdn.com/7/ff/fa74fa510b1296cac782d29ee7b07jpeg.jpeg',
-            image_only: true,
-          });
-        });
+      document.querySelector('#setTitle').addEventListener('click', function () {
+        hybridAPI.setTitle('Test Title')
+      })
 
-        document.querySelector('#share').addEventListener('click', function () {
-          hybridAPI.default.share({
-            title: '饿了么积分商城，任性兑换不花钱',
-            text: '叫外卖，上饿了么，免费好礼等你来拿',
-            weibo: '饿了么积分商城，任性兑换不花钱。叫外卖，上饿了么，免费好礼等你来拿。' + location.href + '（分享自@饿了么网上订餐）',
-            url: 'https://m.ele.me',
-            image_url: 'https://fuss10.elemecdn.com/3/ca/80d890e2515fea76e46490a2c9455png.png'
-          });
-        });
+      document.querySelector('#sharePanel').addEventListener('click', function () {
+        hybridAPI.sharePanel({
+          source: '',
+          targets: ['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone'],
+          title: '分享标题',
+          text: '分享副标题',
+          url: '分享链接',
+          image_url: '分享图标'
+        })
+      })
 
-        document.querySelector('#selectHongbao').addEventListener('click', function () {
-          hybridAPI.default.selectHongbao('20160318155810312233218022384');
-        });
+      document.querySelector('#sharePanelImageOnly').addEventListener('click', function () {
+        hybridAPI.sharePanel({
+          targets: ['weixin', 'qq'],
+          text: '分享副标题',
+          url: 'https://www.ele.me/',
+          image_url: 'https://fuss10.elemecdn.com/7/ff/fa74fa510b1296cac782d29ee7b07jpeg.jpeg',
+          image_only: true,
+        })
+      })
 
-        document.querySelector('#checkPackages').addEventListener('click', function () {
-          hybridAPI.default.checkPackages(['com.tencent.mm'], function (result) {
-            alert('PackagesStatus: ' + JSON.stringify(result));
-          });
-        });
+      document.querySelector('#share').addEventListener('click', function () {
+        hybridAPI.share({
+          title: '饿了么积分商城，任性兑换不花钱',
+          text: '叫外卖，上饿了么，免费好礼等你来拿',
+          weibo: '饿了么积分商城，任性兑换不花钱。叫外卖，上饿了么，免费好礼等你来拿。' + location.href + '（分享自@饿了么网上订餐）',
+          url: 'https://h5.ele.me',
+          image_url: 'https://fuss10.elemecdn.com/3/ca/80d890e2515fea76e46490a2c9455png.png'
+        })
+      })
 
-        document.querySelector('#openPackage').addEventListener('click', function () {
-          hybridAPI.default.openPackage('com.tencent.mm');
-        });
+      document.querySelector('#selectHongbao').addEventListener('click', function () {
+        hybridAPI.selectHongbao('20160318155810312233218022384')
+      })
 
-        document.querySelector('#setNav').addEventListener('click', function () {
-          var random = function() {
-            return Math.random() > .5;
-          };
-          var randomColor = function() {
-            var color = '#' + Math.round(Math.random() * 0xffffffff).toString(16);
-            if (random()) {
-              color += ',#' + Math.round(Math.random() * 0xffffffff).toString(16);
-            }
-            return color;
-          };
-          var params = {
-            immersive: random(),
-            navBg: random() ? randomColor() : {
-              from: randomColor(),
-              to: randomColor(),
-              direction: random() ? 0 : 1,
-            },
-            navText: random() ? randomColor() : {
-              from: randomColor(),
-              to: randomColor(),
-            },
-            statusText: { solid: random() },
-            triggerHeight: Math.round(100 * Math.random()),
-          };
-          alert(JSON.stringify(params, null, '  '));
-          hybridAPI.default.setNav(params);
-        });
-      })();
+      document.querySelector('#checkPackages').addEventListener('click', function () {
+        hybridAPI.checkPackages(['com.tencent.mm'], function (result) {
+          alert('PackagesStatus: ' + JSON.stringify(result))
+        })
+      })
+
+      document.querySelector('#openPackage').addEventListener('click', function () {
+        hybridAPI.openPackage('com.tencent.mm')
+      })
+
+      document.querySelector('#setNav').addEventListener('click', function () {
+        var random = () => Math.random() > .5
+        var randomColor = function() {
+          var color = '#' + Math.round(Math.random() * 0xffffffff).toString(16)
+          if (random()) {
+            color += ',#' + Math.round(Math.random() * 0xffffffff).toString(16)
+          }
+          return color
+        }
+        var params = {
+          immersive: random(),
+          navBg: random() ? randomColor() : {
+            from: randomColor(),
+            to: randomColor(),
+            direction: random() ? 0 : 1,
+          },
+          navText: random() ? randomColor() : {
+            from: randomColor(),
+            to: randomColor(),
+          },
+          statusText: { solid: random() },
+          triggerHeight: Math.round(100 * Math.random()),
+        }
+        hybridAPI.setNav(params)
+      })
     </script>
   </body>
 </html>

@@ -1,19 +1,17 @@
-import { isFunction, invokeMethod, invokeMethodWithError } from '../util'
+import { invokeMethod } from '../util'
 
-export default (count, callback) => {
-  if (isFunction(callback)) {
-    invokeMethod('contactList', count, data => {
-      callback(data)
-    })
-  } else {
-    return new Promise((resolve, reject) => {
-      try {
-        invokeMethodWithError('contactList', reject, count, data => {
-          resolve(data)
-        })
-      } catch(error) {
-        reject(error)
+export default count => {
+  return new Promise((resolve, reject) => {
+    if (/Android/i.test(navigator.userAgent)) {
+      return reject({ name: 'NOT_SUPPORT' })
+    }
+    invokeMethod('contactList', count)
+    .then(response => {
+      if (typeof response === 'string') {
+        reject({ name: 'PERMISSION_DENIED', data: response })
+      } else {
+        resolve(response)
       }
     })
-  }
+  })
 }

@@ -30,14 +30,14 @@ export const setRightMenu = items => {
     })
   })
 
-  invokeMethod('showRightBarItems', params)
+  return invokeMethod('showRightBarItems', params)
 }
 
 export const clearRightMenu = () => {
-  invokeMethod('removeRightBarItems')
-
   Object.keys(events).forEach(eventName => {
     listener('remove', eventName)
     delete events[eventName]
   })
+
+  return invokeMethod('removeRightBarItems')
 }

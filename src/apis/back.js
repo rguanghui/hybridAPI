@@ -18,14 +18,14 @@ export const hookBack = ({ eventName, action }) => {
   }
   listener('add', eventName)
 
-  invokeMethod('hookGoback', eventName)
+  return invokeMethod('hookGoback', eventName)
 }
 
 export const cancelHookBack = () => {
-  invokeMethod('hookGoback', null)
-
   Object.keys(events).forEach(eventName => {
     listener('remove', eventName)
     delete events[eventName]
   })
+
+  return invokeMethod('hookGoback', null)
 }

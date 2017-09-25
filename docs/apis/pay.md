@@ -1,3 +1,7 @@
+# Native 收银台
+
+> 在唤起 Native 收银台前，我们需要先进行落单操作。然后将一些落单信息提供给 Native，Native 会根据这些信息来请求支付获取支付情景。支付完成 / 取消 / 失败时都会回传给 H5 相应状态。
+
 ``` js
 /**
  * @param {Object} params app scheme 参数

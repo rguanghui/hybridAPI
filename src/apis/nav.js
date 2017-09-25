@@ -28,4 +28,8 @@ export default ({ immersive, statusText, navBg, navText, triggerHeight }) => {
   if (triggerHeight !== undefined) {
     invokeMethod('setTriggerHeight', triggerHeight)
   }
+
+  return new Promise((resolve) => {
+    resolve()
+  })
 }

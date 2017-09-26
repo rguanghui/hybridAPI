@@ -26,6 +26,7 @@ hybridAPI.sharePanel({
   targets: [Array], // 需要展示的分享平台。可供选择的有 ['weixin', 'weixin_timeline', 'weibo', 'qq', 'qzone']。默认展示全部
   image_url: [String], // 分享的图片缩略图或者图片（绝对路径）
 
-  image_only: [Boolean], // 是否单独分享一张图片，当设置为 true 的时候分享出去的是一个图片，而不是链接。默认为 false
+  media: [String],  // 是否分享截屏，当设置为 screenshot 的时候分享出去的是当前 WebView 截屏，而不是链接。（支持版本：7.17）
+  image_only: [Boolean], // 是否单独分享一张图片，当设置为 true 的时候分享出去的是一个图片，而不是链接。默认为 false（支持版本：7.18）
 })
 ```
